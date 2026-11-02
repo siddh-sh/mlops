@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: car-price-app
+  namespace: car-price
+  labels:
+    app: car-price-app
+spec:
+  selector:
+    matchLabels:
+      app: car-price-app
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 15s
