@@ -17,4 +17,4 @@ RUN python -m src.train
 EXPOSE 8501 8000
 HEALTHCHECK CMD python -c "import urllib.request as u; u.urlopen('http://localhost:8501/_stcore/health')"
 
-CMD ["streamlit", "run", "app/streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["python", "app/serve.py"]
