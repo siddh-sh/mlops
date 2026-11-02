@@ -44,6 +44,7 @@ resource "helm_release" "monitoring" {
   chart      = "kube-prometheus-stack"
   version    = var.prometheus_stack_version
   namespace  = kubernetes_namespace.monitoring.metadata[0].name
+  timeout    = 1500
 
   set {
     name  = "grafana.adminPassword"
