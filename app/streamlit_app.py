@@ -10,6 +10,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from data.generate_data import BRANDS, FUELS, OWNERS, SELLERS, TRANSMISSIONS  # noqa: E402
 from src.predict import load_model, predict_price  # noqa: E402
 
+st.set_page_config(page_title="Car Price Predictor", page_icon="🚗")
+
 METRICS_PORT = int(os.getenv("METRICS_PORT", "8000"))
 
 
@@ -47,7 +49,6 @@ def get_model():
 metrics = init_metrics()
 model = get_model()
 
-st.set_page_config(page_title="Car Price Predictor", page_icon="🚗")
 st.title("🚗 Used Car Price Predictor")
 st.caption("RandomForest model trained on CarDekho-style data · MLOps demo")
 
