@@ -45,7 +45,7 @@
 
 ## 5. Demo script (≈8 minutes)
 
-**Before you start:** `docker compose up -d`, then open the app once and click Predict (this starts the metrics endpoint). Have these tabs ready: GitHub repo, Actions, app :8501, Grafana :3000 (admin/admin), Prometheus :9090, MLflow :5000.
+**Before you start:** `docker compose up -d`, make a few predictions so the dashboard has data. Have these tabs ready: GitHub repo, Actions, app :8501, Grafana :3000 (admin/admin), Prometheus :9090, MLflow :5000.
 
 | # | Show | Say | ~Time |
 |---|---|---|---|
@@ -117,7 +117,10 @@ docker compose down                 # stop
 pytest -q                           # run tests
 python -m src.experiments           # MLflow runs
 mlflow ui --backend-store-uri sqlite:///mlflow.db
-cd terraform && terraform plan      # preview infra (needs a cluster context)
-kubectl apply -f k8s/ && kubectl get pods -n car-price
+minikube start
+cd terraform && terraform plan -var kube_context=minikube   # preview infra
+kubectl get pods -n car-price        # NOTE: -n car-price, the app is not in the default namespace
+kubectl -n car-price port-forward svc/car-price-app 8502:80
+kubectl -n monitoring port-forward svc/kube-prometheus-stack-grafana 3001:80   # password: kubectl -n monitoring get secret kube-prometheus-stack-grafana -o jsonpath='{.data.admin-password}' | base64 -d
 ```
 Useful PromQL: `up`, `car_price_predictions_total`, `rate(car_price_predictions_total[1m])`, `histogram_quantile(0.95, sum by (le)(rate(car_price_prediction_latency_seconds_bucket[5m])))`.
