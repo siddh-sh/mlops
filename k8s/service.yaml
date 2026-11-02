@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: car-price-app
+  namespace: car-price
+  labels:
+    app: car-price-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: car-price-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+    - name: metrics
+      port: 8000
+      targetPort: metrics
