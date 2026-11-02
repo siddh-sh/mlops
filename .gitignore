@@ -9,3 +9,6 @@ terraform/.terraform/
 terraform/*.tfstate*
 terraform/.terraform.lock.hcl
 terraform/*-config
+mlflow.db
+mlruns/
+mlartifacts/
